@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
- // #define MASTER_LEFT
+//=  #define MASTER_LEFT
 #define MASTER_RIGHT
 // #define EE_HANDS
 
@@ -42,15 +42,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define RGBLIGHT_SLEEP
 
 
-#undef RGBLED_NUM
-#define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM 12
+//#undef RGBLED_NUM
+//=#define RGBLIGHT_ANIMATIONS
+//#define RGBLED_NUM 12
 
 
 //#define RGBLIGHT_LIMIT_VAL 120
 //j#define RGBLIGHT_HUE_STEP 10
 //#define RGBLIGHT_SAT_STEP 17
 //#define RGBLIGHT_VAL_STEP 17
-#define RGBLED_SPLIT { 6, 6 }
+//#define RGBLED_SPLIT { 6, 6 }
 //
 //
