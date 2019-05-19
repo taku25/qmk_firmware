@@ -74,4 +74,5 @@ SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 CUSTOM_MATRIX = yes
 
-DEFAULT_FOLDER = accent/rev1
+DEFAULT_FOLDER = accent/rev2
+

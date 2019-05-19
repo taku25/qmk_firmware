@@ -18,10 +18,13 @@ extern rgblight_config_t rgblight_config;
 
 extern uint8_t is_master;
 
-#define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 16
+enum layer_number {
+    _QWERTY = 0,
+    _LOWER,
+    _RAISE,
+    _ADJUST
+};
+
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
@@ -32,6 +35,8 @@ enum custom_keycodes {
 };
 
 
+//LT(RAISE, KC_GRV), KC_Z,      KC_X,    KC_C,    KC_V,   KC_B,             KC_BSPC,   KC_ESC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, LT(RAISE,KC_RBRC), 
+//
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -51,7 +56,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_QWERTY] = LAYOUT( \
   KC_MINUS,          KC_Q,      KC_W,    KC_E,    KC_R,   KC_T,                                 KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_EQUAL,\
   LCTL_T(KC_QUOTE),  KC_A,      KC_S,    KC_D,    KC_F,   KC_G,                                 KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, RCTL_T(KC_LBRC), \
-  LT(RAISE, KC_GRV), KC_Z,      KC_X,    KC_C,    KC_V,   KC_B,             KC_BSPC,   KC_ESC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, LT(RAISE,KC_RBRC),   \
+  LT(_RAISE, KC_GRV), KC_Z,      KC_X,    KC_C,    KC_V,   KC_B,             KC_BSPC,   KC_ESC,  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, LT(_RAISE,KC_RBRC), 
                      KC_AMPERSAND,  KC_LGUI, KC_LALT, LOWER,  LSFT_T(KC_LANG2), KC_SPC,    KC_ENT,  RSFT_T(KC_LANG1), LOWER,   KC_RALT, KC_RGUI, KC_BSLASH\
 ),
 /* LOWER
@@ -105,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
  [_ADJUST] = LAYOUT( \
   _______,  _______,  _______,   _______,  _______, _______,                        _______,  _______,  _______,  _______,  _______,  _______, \
-  _______,  _______,  _______,   _______,  _______, _______,                        _______,  _______,  _______,  _______,  _______,  _______, \
+  RGB_HUI,  RGB_HUD,  RGB_SAI,   RGB_SAD,  RGB_VAI, RGB_VAD,                        RGB_HUI,  RGB_HUD,  RGB_SAI,   RGB_SAD,  RGB_VAI, RGB_VAD, \
   _______,  _______,  _______,   _______,  RGB_RMOD, RGB_MOD, RGB_TOG,    RGB_TOG ,  RGB_MOD,  RGB_RMOD,  _______,  _______,  _______,  _______,\
             _______,  _______,   _______,  _______, _______,  RGBRST,     RGBRST,  _______,  _______,  _______,  _______,  _______\
 )
