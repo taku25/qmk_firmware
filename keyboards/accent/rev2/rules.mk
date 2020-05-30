@@ -1,3 +1,3 @@
-SRC += rev1/matrix.c
-SRC += rev1/split_util.c
-SRC += rev1/split_scomm.c
+SRC += rev2/matrix.c
+SRC += rev2/split_util.c
+SRC += rev2/split_scomm.c
