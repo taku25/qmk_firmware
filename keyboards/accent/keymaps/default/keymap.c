@@ -50,9 +50,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  */
  [_QWERTY] = LAYOUT( \
-  KC_MINUS,                   KC_Q,      KC_W,    KC_E,    KC_R,              KC_T,                                    KC_Y,    KC_U,     KC_I,    KC_O,       KC_P,           KC_EQUAL,\
-  LCTL_T(KC_QUOTE),           KC_A,     KC_S,     KC_D,    KC_F,              KC_G,                                    KC_H,    KC_J,     KC_K,    KC_L,    KC_SCLN,    RCTL_T(KC_LBRC),\
-  LT(_RAISE, KC_GRV),         KC_Z,     KC_X,     KC_C,    KC_V,              KC_B,   KC_DELETE,    KC_ESC,              KC_N,    KC_M,  KC_COMM,  KC_DOT,    KC_SLSH, LT(_RAISE,KC_RBRC),\
+  KC_MINUS,                   KC_Q,      KC_W,    KC_E,    KC_R,              KC_T,                        KC_Y,    KC_U,     KC_I,    KC_O,       KC_P,           KC_EQUAL,\
+  LCTL_T(KC_QUOTE),           KC_A,     KC_S,     KC_D,    KC_F,              KC_G,                        KC_H,    KC_J,     KC_K,    KC_L,    KC_SCLN,    RCTL_T(KC_LBRC),\
+  LT(_RAISE, KC_GRV),         KC_Z,     KC_X,     KC_C,    KC_V,              KC_B,   KC_DELETE,  KC_ESC,  KC_N,    KC_M,  KC_COMM,  KC_DOT,    KC_SLSH, LT(_RAISE,KC_RBRC),\
                       KC_AMPERSAND,  KC_LGUI,  KC_LALT,   LOWER,  LSFT_T(KC_LANG2),    KC_SPC,    KC_ENT,  RSFT_T(KC_LANG1),   LOWER,  KC_RALT, KC_RGUI,  KC_BSLASH\
 ),
 /* LOWER
@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* RAISE
  * ,---------------------------------------------.                      ,---------------------------------------------.
- * |         |   1  |   2  |   3  |   4  |   5   |                      |   6  |   7  |   8  |  9   |   10 |          |
+ * | esc     |   1  |   2  |   3  |   4  |   5   |                      |   6  |   7  |   8  |  9   |   10 | Delete   |
  * |---------+------+----- +------+------+-------|                      |------+------+----- +------+------+----------|
  * |         |   =  |  "   |  -   |  /   |  ¥     |                     | Left | Down | Up   | Down |  "   |          |
  * |---------+------+------+------+------+-------|-------.      .-------|------+------+------+------+------+----------|
@@ -86,15 +86,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *           `-------------------------------------------'      '-----------------------------------'------'
  */
  [_RAISE] = LAYOUT( \
-  _______,      KC_1,    KC_2,      KC_3,     KC_4,      KC_5,                          KC_6,     KC_7,     KC_8,      KC_9,       KC_0,  _______,\
+   KC_ESC,      KC_1,    KC_2,      KC_3,     KC_4,      KC_5,                       KC_6,     KC_7,     KC_8,      KC_9,       KC_0,  KC_DELETE,\
   _______,  KC_EQUAL,  KC_GRV,  KC_MINUS, KC_SLASH, KC_BSLASH,                       KC_LEFT,  KC_DOWN,    KC_UP,  KC_RIGHT,   KC_MINUS,  _______,\
   _______,  KC_MINUS, _______,   _______,  _______,   _______, _______,    _______,  _______,  _______,  _______,   KC_JYEN,  KC_BSLASH,  _______,\
             _______,  _______,   _______,  _______,   _______,  KC_TAB,    KC_BSPC,  _______,  _______,  _______,   _______,    _______\
 ),
 
-/* RAISE
+/* ADJUST
  * ,---------------------------------------------.                      ,---------------------------------------------.
- * |         |  HU+ |  SA+ |  VA+ |      |       |                      |      |      |  VA+ |  SA+ |  HU+ |          |
+ * | han/zen |  HU+ |  SA+ |  VA+ |      |       |                      |      |      |  VA+ |  SA+ |  HU+ |          |
  * |---------+------+------+------+------+-------|                      |------+------+------+------+------+----------|
  * |         |  HU- |  SA- |  VA+ |      |       |                      |      |      |  VA+ |  SA- |  HU- |          |
  * |---------+------+------+------+------+-------|-------.      .-------|------+------+------+------+------+----------|
@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *           `-------------------------------------------'      '-----------------------------------'------'
  */
  [_ADJUST] = LAYOUT( \
-  _______,  RGB_HUI,  RGB_SAI,  RGB_VAI,    _______, _______,                       _______,  _______,  RGB_VAI,  RGB_SAI,  RGB_HUI, _______,\
+  KC_LANG5, RGB_HUI,  RGB_SAI,  RGB_VAI,    _______, _______,                       _______,  _______,  RGB_VAI,  RGB_SAI,  RGB_HUI, _______,\
   _______,  RGB_HUD,  RGB_SAD,  RGB_VAD,    _______, _______,                       _______,  _______,  RGB_VAD,  RGB_SAD,  RGB_HUD, _______,\
   _______,  _______,  _______,   _______,  RGB_RMOD, RGB_MOD, RGB_TOG,    RGB_TOG,  RGB_MOD, RGB_RMOD,  _______,  _______,  _______, _______,\
             _______,  _______,   _______,   _______, _______, RGBRST,      RGBRST,  _______,  _______,  _______,  _______,  _______\
