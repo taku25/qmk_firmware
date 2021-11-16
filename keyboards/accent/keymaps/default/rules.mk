@@ -19,10 +19,14 @@ OLED_ENABLE = yes           # OLED_ENABLE
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
+LOCAL_GLCDFONT = no         # use each keymaps "helixfont.h" instead of "common/glcdfont.c"
+
+ifeq ($(strip $(LOCAL_GLCDFONT)), yes)
+  OPT_DEFS += -DLOCAL_GLCDFONT
+endif
 
 # If you want to change the display of OLED, you need to change here
-SRC +=  ./lib/glcdfont.c \
-        ./lib/layer_state_reader.c \
+SRC +=  ./lib/layer_state_reader.c \
         ./lib/logo_reader.c \
         ./lib/keylogger.c \
         #./lib/rgb_state_reader.c \
