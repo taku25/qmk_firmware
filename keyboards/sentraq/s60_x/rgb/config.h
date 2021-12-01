@@ -8,7 +8,6 @@
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Sentraq
 #define PRODUCT         S60-X-RGB
-#define DESCRIPTION     QMK keyboard firmware for S60-X RGB
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -36,7 +35,7 @@
 #define DIODE_DIRECTION COL2ROW
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCING_DELAY 5
+#define DEBOUNCE 5
 
 #define RGB_DI_PIN F6
 #ifdef RGB_DI_PIN
@@ -46,4 +45,3 @@
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 #endif
-

@@ -15,8 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#pragma once
 
 #include "config_common.h"
 
@@ -26,7 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    大橘子外设 (Large orange peripherals)
 #define PRODUCT         Org60
-#define DESCRIPTION     Org60 Keyboard PCB by 大橘子外设 (Large orange peripherals)
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -55,7 +53,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define DIODE_DIRECTION COL2ROW
 
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCING_DELAY 5
+#define DEBOUNCE 5
 
 /* RGB Underglow
  * F6 PIN for Org60 that has pre-soldered WS2812 LEDs
@@ -73,5 +71,3 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define LOCKING_RESYNC_ENABLE
 
 #define TAPPING_TERM 200
-
-#endif

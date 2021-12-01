@@ -8,7 +8,6 @@
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    hineybush
 #define PRODUCT         hineyG80
-#define DESCRIPTION     QMK-powered PCB for Cherry G80/81-1800 Boards
 
 /* key matrix size */
 #define MATRIX_ROWS 12
@@ -22,6 +21,11 @@
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION COL2ROW
 
+
+#define LED_NUM_LOCK_PIN C6
+#define LED_CAPS_LOCK_PIN B6
+#define LED_SCROLL_LOCK_PIN B5
+
 /* number of backlight levels */
 
 #ifdef BACKLIGHT_PIN
@@ -29,7 +33,7 @@
 #endif
 
 /* Set 0 if debouncing isn't needed */
-#define DEBOUNCING_DELAY 5
+#define DEBOUNCE 5
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #define LOCKING_SUPPORT_ENABLE
@@ -44,4 +48,3 @@
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 #endif
-
