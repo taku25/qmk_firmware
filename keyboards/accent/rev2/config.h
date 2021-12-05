@@ -1,8 +1,6 @@
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
 Copyright 2015 Jack Humbert
-Copyright 2017 F_YUUCHI
-Copyright 2017 taku25
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,32 +19,60 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x0128 
+#define VENDOR_ID       0xFFED
+#define PRODUCT_ID      0x0002
 #define DEVICE_VER      0x0002
-#define MANUFACTURER    taku25   
-#define PRODUCT         accen_rev2
-#define DESCRIPTION     accent is orth + ergo split keyboard
+#define MANUFACTURER    taku25
+#define PRODUCT         Accent_rev
+
+// #define TAPPING_FORCE_HOLD
+// #define TAPPING_TERM 100
+
+/* Use I2C or Serial */
+#define USE_SERIAL
+//#define USE_MATRIX_I2C
+
+/* Soft Serial defines */
+#define SOFT_SERIAL_PIN D2
+#define SERIAL_USE_MULTI_TRANSACTION
+
+/* Select hand configuration */
+#define MASTER_LEFT
+// #define MASTER_RIGHT
+// #define EE_HANDS
+
+// Accent keyboard OLED support
+//      see ./local_features.mk: OLED_SELECT=local
+#ifdef OLED_LOCAL_ENABLE
+  #define SSD1306OLED
+#endif
+
+#define OLED_UPDATE_INTERVAL 50
+
+/* Select rows configuration */
+// Rows are 4 or 5
 
 /* key matrix size */
 // Rows are doubled-up
 #define MATRIX_ROWS 8
-#define MATRIX_COLS 7
+#define MATRIX_ROW_PINS { D7, E6, B4, B5 }
 
 // wiring of each half
-#define MATRIX_ROW_PINS { D7, E6, B4, B5 }
+#define MATRIX_COLS 7
 #define MATRIX_COL_PINS { F5, F6, F7, B1, B3, B2, B6 }
+// #define MATRIX_COL_PINS { B2, B3, B1, F7, F6, F5, F4 } //uncomment this line and comment line above if you need to reverse left-to-right key order
 
-#define CATERINA_BOOTLOADER
-
-/* define tapping term */
-//#define TAPPING_TERM 100
+/* COL2ROW, ROW2COL*/
+#define DIODE_DIRECTION COL2ROW
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
 
+/* number of backlight levels */
+// #define BACKLIGHT_LEVELS 3
+
 /* Set 0 if debouncing isn't needed */
-#define DEBOUNCING_DELAY 5
+#define DEBOUNCE 5
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 //#define LOCKING_SUPPORT_ENABLE
@@ -55,19 +81,49 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* ws2812 RGB LED */
 #define RGB_DI_PIN D3
-#define RGBLED_NUM 16   // Number of LEDs
-#define RGBLIGHT_ANIMATIONS
-//#define RGBLIGHT_LIMIT_VAL 120
-//#define RGBLIGHT_HUE_STEP 10
-//#define RGBLIGHT_SAT_STEP 17
-//#define RGBLIGHT_VAL_STEP 17
-//#define RGBLED_SPLIT { 8, 8 }
 
+//#define RGBLED_NUM 12    // Number of LEDs. see ./keymaps/default/config.h
 
-//#define RGBLIGHT_LIMIT_VAL 120
-//j#define RGBLIGHT_HUE_STEP 10
-//#define RGBLIGHT_SAT_STEP 17
-//#define RGBLIGHT_VAL_STEP 17
+// Accent keyboard RGB LED support
+//#define RGBLIGHT_ANIMATIONS : see ./rules.mk: LED_ANIMATIONS = yes or no
+//    see ./rules.mk: LED_BACK_ENABLE or LED_UNDERGLOW_ENABLE set yes
+#ifdef RGBLED_BACK
+#else
+  //only underglow
+  #define RGBLED_NUM 16
+#endif
+
+#ifndef IOS_DEVICE_ENABLE
+  #if RGBLED_NUM <= 6
+    #define RGBLIGHT_LIMIT_VAL 255
+  #else
+      #define RGBLIGHT_LIMIT_VAL 130
+  #endif
+  #define RGBLIGHT_VAL_STEP 17
+#else
+  #if RGBLED_NUM <= 6
+    #define RGBLIGHT_LIMIT_VAL 90
+  #else
+      #define RGBLIGHT_LIMIT_VAL 45
+  #endif
+  #define RGBLIGHT_VAL_STEP 4
+#endif
+#define RGBLIGHT_HUE_STEP 10
+#define RGBLIGHT_SAT_STEP 17
+
+#if defined(RGBLIGHT_ENABLE) && !defined(IOS_DEVICE_ENABLE)
+// USB_MAX_POWER_CONSUMPTION value for Accent keyboard
+//  120  RGBoff, OLEDoff
+//  120  OLED
+//  330  RGB 6
+//  300  RGB 32
+//  310  OLED & RGB 32
+  #define USB_MAX_POWER_CONSUMPTION 400
+#else
+  // fix iPhone and iPad power adapter issue
+  // iOS device need lessthan 100
+  #define USB_MAX_POWER_CONSUMPTION 100
+#endif
 
 /*
  * Feature disable options
@@ -75,10 +131,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* disable debug print */
-//#define NO_DEBUG
+// #define NO_DEBUG
 
 /* disable print */
-//{#define NO_PRINT
+// #define NO_PRINT
 
 /* disable action features */
 //#define NO_ACTION_LAYER
@@ -86,3 +142,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_ONESHOT
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
+

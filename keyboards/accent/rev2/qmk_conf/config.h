@@ -1,4 +1,6 @@
 /*
+This is the c configuration file for the keymap
+
 Copyright 2012 Jun Wako <wakojun@gmail.com>
 Copyright 2015 Jack Humbert
 
@@ -18,20 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
+// place overrides here
 
-// GCC include 'config.h" sequence in qmk_firmware/keyboards/accent/
-//   -include keyboards/accent/config.h
-//   -include keyboards/accent/rev?/config.h
-//   -include keyboards/accent/rev?/keymaps/MAPNAME/config.h
-//   XXXX.c
+// If you need more program area, try select and reduce rgblight modes to use.
 
-// GCC include search path in qmk_firmare/keyboards/accent/
-//    #include "..." search starts here:
-//    #include <...> search starts here:
-//     keyboards/accent/rev?/keymaps/MAPNAME
-//     keyboards/accent
-//     keyboards/accent/rev?
-//     .
-//     ./tmk_core
-//     ......
+// Selection of RGBLIGHT MODE to use.
+#if defined(LED_ANIMATIONS)
+   #define RGBLIGHT_EFFECT_BREATHING
+   #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+   #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+   #define RGBLIGHT_EFFECT_SNAKE
+   #define RGBLIGHT_EFFECT_KNIGHT
+   #define RGBLIGHT_EFFECT_CHRISTMAS
+   #define RGBLIGHT_EFFECT_STATIC_GRADIENT
+   //#define RGBLIGHT_EFFECT_RGB_TEST
+   //#define RGBLIGHT_EFFECT_ALTERNATING
+#endif
