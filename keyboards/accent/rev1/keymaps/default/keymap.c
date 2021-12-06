@@ -35,6 +35,14 @@
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
+typedef union {
+    uint32_t raw;
+    struct {
+        uint8_t base_layer : 8;
+        bool    mac_mode : 1;
+    };
+} user_config_t;
+
 
 enum layer_number {
     _QWERTY = 0,
@@ -50,7 +58,9 @@ enum custom_keycodes {
   RAISE,
   ADJUST,
   RGBRST,
-  TOS,
+
+  L_TOS,
+  L_CMD,
 };
 
 enum macro_keycodes {
@@ -75,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------+------+------+------+------+-------|-------.      .-------|------+------+------+------+------+----------|
  * |RAISE(`) |   Z  |   X  |   C  |   V  |   B   |  esc  |      | Dele  |  n   |  m   |  ,   |  .   |  /   | RAISE(]) |
  * `---------+------+------+------+------+-------+-------|      |-------+------+------+------+------+------|----------'
- *           | Back | LALT | GUI  |      | LShift| space |      | enter |RShift|      | GUI  | ALT  |  \   |
+ *           | Back | LALT |L_CMD |      | LShift| space |      | enter |RShift|      | GUI  | ALT  |  \   |
  *           |  SP  |      |      | LOW  | lagn2 |       |      |       |lagn1 | LOW  |      |      |      |
  *           `-------------------------------------------'      '-----------------------------------'------'
  *
@@ -119,10 +129,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *           `-------------------------------------------'      '-----------------------------------'------'
  */
  [_LOWER] = LAYOUT( \
-   KC_F11,    KC_F1,    KC_F2,     KC_F3,    KC_F4,    KC_F5,                                   KC_F6,      KC_F7,       KC_F8,    KC_F9,   KC_F10,   KC_F12,\
-  _______,    _______, _______,  _______, _______,  _______,                        KC_LEFT,  KC_DOWN,    KC_UP,  KC_RIGHT,    _______,   _______,\
-  _______, _______,  _______,   _______,  _______,  _______, LCA(KC_DELETE),   KC_PAUSE,   KC_PSCREEN,     KC_END,   KC_PGDOWN,  _______,  _______,  _______,\
-           _______,  _______,   _______,  _______,  _______,        _______,  KC_DELETE,      _______,    _______,     _______,  _______,  _______\
+   KC_F11,    KC_F1,    KC_F2,     KC_F3,    KC_F4,    KC_F5,                                   KC_F6,      KC_F7,       KC_F8,    KC_F9,    KC_F10,   KC_F12,\
+  _______,    _______, _______,  _______, _______,  _______,                                  KC_LEFT,    KC_DOWN,       KC_UP,  KC_RIGHT,  _______,  _______,\
+  _______, _______,  _______,   _______,  _______,  _______, LCA(KC_DELETE),   KC_PAUSE,   KC_PSCREEN,     KC_END,   KC_PGDOWN,  _______,   _______,  _______,\
+           _______,  _______,   _______,  _______,  _______,        _______,  KC_DELETE,      _______,    _______,     _______,  _______,   _______\
 ),
 /* ADJUST
  * ,---------------------------------------------.                      ,---------------------------------------------.
@@ -137,10 +147,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *           `-------------------------------------------'      '-----------------------------------'------'
  */
  [_ADJUST] = LAYOUT( \
-  KC_LANG5, RGB_HUI,  RGB_SAI,  RGB_VAI,    _______, _______,                          KC_0,     KC_1,     KC_4,     KC_7,  _______, _______,\
-  _______,  RGB_HUD,  RGB_SAD,  RGB_VAD,    _______, _______,                       KC_COMM,     KC_2,     KC_5,     KC_8,  _______, _______,\
-  _______,  _______,  _______,   _______,  RGB_RMOD, RGB_MOD, RGB_TOG,    _______,   KC_DOT,     KC_3,     KC_6,     KC_9,  _______, _______,\
-            _______,  _______,   _______,   _______,     TOS, RGBRST,     _______,  _______,  _______,  _______,  _______,  _______\
+  KC_LANG5, RGB_HUI,  RGB_SAI,  RGB_VAI,  _______, _______,                        KC_0,     KC_1,     KC_4,     KC_7,  _______, _______,\
+  _______,  RGB_HUD,  RGB_SAD,  RGB_VAD,  _______, _______,                     KC_COMM,     KC_2,     KC_5,     KC_8,  _______, _______,\
+  _______,  RGB_MOD,  RGB_TOG,   RGBRST,  _______, _______, _______,   KC_DOT,     KC_3,     KC_6,     KC_9,  _______,  _______, _______,\
+            _______,  _______,   _______, _______,   L_TOS, _______,  _______,  _______,  _______,  _______,  _______,  _______\
 )
 };
 
@@ -153,6 +163,7 @@ float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
 // define variables for reactive RGB
 bool TOG_STATUS = false;
 int RGB_current_mode;
+user_config_t   user_config;
 
 void persistent_default_layer_set(uint16_t default_layer) {
   eeconfig_update_default_layer(default_layer);
@@ -170,6 +181,13 @@ void update_tri_layer_RGB(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
     layer_off(layer3);
   }
 }
+
+// void keyboard_post_init_user(void)
+// {
+//     user_config.raw = eeconfig_read_user();
+//     mac_mode = user_config.mac_mode;
+//     set_mac_mode_keys(mac_mode);
+// }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -264,13 +282,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       #endif
       break;
-    case TOS:
-      // set_mac_mode_kb(is_mac_mode());
+    case L_TOS:
+      set_mac_mode_kb(is_mac_mode());
       return false;
       break;
   }
   return true;
 }
+
+#ifdef SPLIT_TRANSPORT_MIRROR
+bool should_process_keypress(void)
+{
+    return true;
+}
+#endif
 
 #ifdef SSD1306OLED
   #include "ssd1306.h"
@@ -283,9 +308,9 @@ void matrix_init_user(void) {
     #ifdef RGBLIGHT_ENABLE
       RGB_current_mode = rgblight_get_mode();
     #endif
-    //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
+    // //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
     #ifdef SSD1306OLED
-        iota_gfx_init(!has_usb());   // turns on the display
+        iota_gfx_init();   // turns on the display
     #endif
 }
 

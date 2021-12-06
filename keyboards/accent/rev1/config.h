@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x0002
 #define DEVICE_VER      0x0002
 #define MANUFACTURER    taku25
-#define PRODUCT         Accent_rev
+#define PRODUCT         Accent_rev1
 
 // #define TAPPING_FORCE_HOLD
 // #define TAPPING_TERM 100
@@ -43,9 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Accent keyboard OLED support
 //      see ./local_features.mk: OLED_SELECT=local
-#ifdef OLED_LOCAL_ENABLE
-  #define SSD1306OLED
-#endif
+// #ifdef OLED_ENABLE
+//   #define SSD1306OLED
+// #endif
 
 #define OLED_UPDATE_INTERVAL 50
 
@@ -87,59 +87,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Accent keyboard RGB LED support
 //#define RGBLIGHT_ANIMATIONS : see ./rules.mk: LED_ANIMATIONS = yes or no
 //    see ./rules.mk: LED_BACK_ENABLE or LED_UNDERGLOW_ENABLE set yes
-#ifdef RGBLED_BACK
-#else
-  //only underglow
-  #define RGBLED_NUM 16
+#ifdef RGBLIGHT_ENABLE
+    #define RGBLED_NUM 16
+
+    #define RGBLIGHT_LIMIT_VAL 130
+    #define RGBLIGHT_VAL_STEP 17
+
+    #define RGBLIGHT_HUE_STEP 10
+    #define RGBLIGHT_SAT_STEP 17
 #endif
 
-#ifndef IOS_DEVICE_ENABLE
-  #if RGBLED_NUM <= 6
-    #define RGBLIGHT_LIMIT_VAL 255
-  #else
-      #define RGBLIGHT_LIMIT_VAL 130
-  #endif
-  #define RGBLIGHT_VAL_STEP 17
-#else
-  #if RGBLED_NUM <= 6
-    #define RGBLIGHT_LIMIT_VAL 90
-  #else
-      #define RGBLIGHT_LIMIT_VAL 45
-  #endif
-  #define RGBLIGHT_VAL_STEP 4
-#endif
-#define RGBLIGHT_HUE_STEP 10
-#define RGBLIGHT_SAT_STEP 17
-
-#if defined(RGBLIGHT_ENABLE) && !defined(IOS_DEVICE_ENABLE)
-// USB_MAX_POWER_CONSUMPTION value for Accent keyboard
-//  120  RGBoff, OLEDoff
-//  120  OLED
-//  330  RGB 6
-//  300  RGB 32
-//  310  OLED & RGB 32
-  #define USB_MAX_POWER_CONSUMPTION 400
-#else
-  // fix iPhone and iPad power adapter issue
-  // iOS device need lessthan 100
-  #define USB_MAX_POWER_CONSUMPTION 100
-#endif
-
-/*
- * Feature disable options
- *  These options are also useful to firmware size reduction.
- */
-
-/* disable debug print */
-// #define NO_DEBUG
-
-/* disable print */
-// #define NO_PRINT
-
-/* disable action features */
-//#define NO_ACTION_LAYER
-//#define NO_ACTION_TAPPING
-//#define NO_ACTION_ONESHOT
-//#define NO_ACTION_MACRO
-//#define NO_ACTION_FUNCTION
-
+#define USB_MAX_POWER_CONSUMPTION 400

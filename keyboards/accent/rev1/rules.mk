@@ -1,14 +1,21 @@
-KEYBOARD_LOCAL_FEATURES_MK := $(dir $(lastword $(MAKEFILE_LIST)))local_features.mk
+SPLIT_KEYBOARD = yes
 
-# Accent Spacific Build Options default values
-OLED_ENABLE = yes           # OLED_ENABLE
-LOCAL_GLCDFONT = no         # use each keymaps "accentfont.h" insted of "common/glcdfont.c"
-LED_BACK_ENABLE = no        # LED backlight (Enable WS2812 RGB underlight.)
-LED_UNDERGLOW_ENABLE = no   # LED underglow (Enable WS2812 RGB underlight.)
-LED_ANIMATIONS = yes        # LED animations
-IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
+RGBLIGHT_ENABLE = yes
+LED_ANIMATIONS = yes
 
-# If OLED_ENABLE is 'yes'
-#   If OLED_SELECT is 'core', use QMK standard oled_dirver.c.
-#   If OLED_SELECT is other than 'core', use accent/local_drivers/ssd1306.c.
-OLED_SELECT = local
+# CUSTOM_MATRIX = yes
+OLED_ENABLE = yes
+OLED_DRIVER = SSD1306
+
+
+OPT_DEFS += -DOLED_FONT_H=\"common/glcdfont.c\"
+
+
+ifeq ($(strip $(OLED_ENABLE)), yes)
+    SRC += lib/mode_icon_reader.c
+    SRC += lib/logo_reader.c
+    SRC += lib/key_logger.c
+    SRC += lib/layer_state_reader.c
+    SRC += oled_display.c
+endif
+

@@ -118,7 +118,7 @@ static void render_layer_status(struct CharacterMatrix *matrix) {
 #    else
 static void render_layer_status(void) {
 #    endif
-  // Define layers here, Have not worked out how to have text displayed for each layer. Copy down the number you see and add a case for it below
+
     const char* buf = read_layer_state();
     oled_write(buf, false);
     oled_write_P(PSTR("\n"), false);
