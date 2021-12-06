@@ -5,30 +5,5 @@
 #   See TOP/keyboards/accent/rules.mk for a list of options that can be set.
 #   See TOP/docs/config_options.md for more information.
 #
-LTO_ENABLE = yes  # if firmware size over limit, try this option
 
-# Accent Spacific Build Options
-# you can uncomment and edit follows 7 Variables
-#  jp: 以下の7つの変数を必要に応じて編集し、コメントアウトをはずします。
-# OLED_ENABLE = no            # OLED_ENABLE
-# LOCAL_GLCDFONT = no         # use each keymaps "accentfont.h" insted of "common/glcdfont.c"
-# LED_BACK_ENABLE = no        # LED backlight (Enable WS2812 RGB underlight.)
-LED_UNDERGLOW_ENABLE = yes   # LED underglow (Enable WS2812 RGB underlight.)
-# LED_ANIMATIONS = yes        # LED animations
-# IOS_DEVICE_ENABLE = no      # connect to IOS device (iPad,iPhone)
 
-# OLED_ENABLE が yes のとき
-#   OLED_SELECT が core ならば QMK 標準の oled_dirver.c を使用します。
-#   OLED_SELECT が core 以外ならば従来どおり accent/local_drivers/ssd1306.c を使用します。
-# If OLED_ENABLE is 'yes'
-#   If OLED_SELECT is 'core', use QMK standard oled_dirver.c.
-#   If OLED_SELECT is other than 'core', use accent/local_drivers/ssd1306.c.
-OLED_SELECT = core
-
-ifeq ($(strip $(OLED_ENABLE)), yes)
-    SRC += lib/mode_icon_reader.c
-    SRC += lib/logo_reader.c
-    SRC += lib/key_logger.c
-    SRC += lib/layer_state_reader.c
-    SRC += oled_display.c
-endif

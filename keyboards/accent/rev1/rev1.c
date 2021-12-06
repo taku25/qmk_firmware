@@ -3,13 +3,14 @@
 // Each keymap.c should use is_keyboard_master() instead of 'is_master'.
 // But keep 'is_master' for a while for backwards compatibility
 //  for the old keymap.c.
-uint8_t is_master = false;
+uint8_t is_master = false; bool _is_mac_mode = true;
 
 #ifdef SSD1306OLED
 #include "ssd1306.h"
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-	return process_record_gfx(keycode,record) && process_record_user(keycode, record);
+	return process_record_user(keycode, record);
+	// return process_record_gfx(keycode,record) && process_record_user(keycode, record);
 }
 #endif
 

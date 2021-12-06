@@ -27,7 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //   XXXX.c
 
 // GCC include search path in qmk_firmare/keyboards/accent/
-//    #include "..." search starts here:
 //    #include <...> search starts here:
 //     keyboards/accent/rev?/keymaps/MAPNAME
 //     keyboards/accent
