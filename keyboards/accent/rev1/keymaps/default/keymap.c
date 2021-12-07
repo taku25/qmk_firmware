@@ -144,7 +144,6 @@ float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
 #endif
 
 // define variables for reactive RGB
-bool TOG_STATUS = false;
 int RGB_current_mode;
 
 uint8_t TOGGLE_MAC_LGUI = KC_LGUI;
@@ -154,19 +153,14 @@ void persistent_default_layer_set(uint16_t default_layer) {
   default_layer_set(default_layer);
 }
 
-bool set_tri_layer(uint8_t layer1, uint8_t layer2, uint8_t layer3) {
-  if (IS_LAYER_ON(layer1) && IS_LAYER_ON(layer2)) {
-    layer_on(layer3);
-    return true;
-  } else {
-    layer_off(layer3);
-  }
-  return false;
-}
 
 void keyboard_post_init_user(void)
 {
     set_mac_mode_kb(true);
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -192,48 +186,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
           //not sure how to have keyboard check mode and set it to a variable, so my work around
           //uses another variable that would be set to true after the first time a reactive key is pressed.
-        if (TOG_STATUS) { //TOG_STATUS checks is another reactive key currently pressed, only changes RGB mode if returns false
-        } else {
-          TOG_STATUS = !TOG_STATUS;
-          #ifdef RGBLIGHT_ENABLE
-            //rgblight_mode(RGBLIGHT_MODE_SNAKE + 1);
-          #endif
-        }
         layer_on(_LOWER);
-        set_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
         #ifdef RGBLIGHT_ENABLE
           //rgblight_mode(RGB_current_mode);   // revert RGB to initial mode prior to RGB mode change
         #endif
-        TOG_STATUS = false;
         layer_off(_LOWER);
-        set_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
       return false;
       break;
-    case RAISE:
-      if (record->event.pressed) {
-        //not sure how to have keyboard check mode and set it to a variable, so my work around
-        //uses another variable that would be set to true after the first time a reactive key is pressed.
-        if (TOG_STATUS) { //TOG_STATUS checks is another reactive key currently pressed, only changes RGB mode if returns false
-        } else {
-          TOG_STATUS = !TOG_STATUS;
-          #ifdef RGBLIGHT_ENABLE
-            //rgblight_mode(RGBLIGHT_MODE_SNAKE);
-          #endif
-        }
-        layer_on(_RAISE);
-        set_tri_layer(_LOWER, _RAISE, _ADJUST);
-      } else {
-        #ifdef RGBLIGHT_ENABLE
-          //rgblight_mode(RGB_current_mode);  // revert RGB to initial mode prior to RGB mode change
-        #endif
-        layer_off(_RAISE);
-        TOG_STATUS = false;
-        set_tri_layer(_LOWER, _RAISE, _ADJUST);
-      }
-      return false;
-      break;
+    // case RAISE:
+    //   if (record->event.pressed) {
+    //     //not sure how to have keyboard check mode and set it to a variable, so my work around
+    //     //uses another variable that would be set to true after the first time a reactive key is pressed.
+    //     layer_on(_RAISE);
+    //     update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //   } else {
+    //     #ifdef RGBLIGHT_ENABLE
+    //       //rgblight_mode(RGB_current_mode);  // revert RGB to initial mode prior to RGB mode change
+    //     #endif
+    //     layer_off(_RAISE);
+    //     update_tri_layer(_LOWER, _RAISE, _ADJUST);
+    //   }
+    //   return false;
+    //   break;
     case RGB_MOD:
       #ifdef RGBLIGHT_ENABLE
         if (record->event.pressed) {
