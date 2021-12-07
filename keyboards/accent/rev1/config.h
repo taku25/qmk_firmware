@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Use I2C or Serial */
 #define USE_SERIAL
-//#define USE_MATRIX_I2C
+//#define USE_I2C
 
 /* Soft Serial defines */
 #define SOFT_SERIAL_PIN D2
@@ -41,11 +41,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-// Accent keyboard OLED support
-//      see ./local_features.mk: OLED_SELECT=local
-// #ifdef OLED_ENABLE
-//   #define SSD1306OLED
-// #endif
 
 #define OLED_UPDATE_INTERVAL 50
 
@@ -82,11 +77,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* ws2812 RGB LED */
 #define RGB_DI_PIN D3
 
-//#define RGBLED_NUM 12    // Number of LEDs. see ./keymaps/default/config.h
 
-// Accent keyboard RGB LED support
-//#define RGBLIGHT_ANIMATIONS : see ./rules.mk: LED_ANIMATIONS = yes or no
-//    see ./rules.mk: LED_BACK_ENABLE or LED_UNDERGLOW_ENABLE set yes
 #ifdef RGBLIGHT_ENABLE
     #define RGBLED_NUM 16
 
