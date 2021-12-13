@@ -25,7 +25,7 @@ RGB_MATRIX_DRIVER = WS2812
 # if firmware size over limit, try this option
 # LTO_ENABLE = yes
 
-DEFAULT_FOLDER = accent/rev1
+DEFAULT_FOLDER = accent/tai/rev1
 
 RGBLIGHT_SUPPORTED = yes
 RGB_MATRIX_SUPPORTED = yes
