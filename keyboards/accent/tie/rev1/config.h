@@ -18,13 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x6B62
-#define PRODUCT_ID      0x0002
-#define DEVICE_VER      0x0002
-#define MANUFACTURER    taku25
-#define PRODUCT         Accent_tie_rev1
-
 // #define TAPPING_FORCE_HOLD
 // #define TAPPING_TERM 100
 
@@ -80,6 +73,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef RGBLIGHT_ENABLE
     #define RGBLED_NUM 16
+
+    #define RGBLED_SPLIT { 8, 8 }
+    #define RGBLIGHT_SPLIT
 
     #define RGBLIGHT_LIMIT_VAL 130
     #define RGBLIGHT_VAL_STEP 17
