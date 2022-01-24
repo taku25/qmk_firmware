@@ -1,5 +1,6 @@
 #include "key_logger.h"
 
+
 char keylog_str[24] = {};
 char keylogs_str[21] = {};
 int keylogs_str_idx = 0;
