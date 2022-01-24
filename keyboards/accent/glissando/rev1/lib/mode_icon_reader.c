@@ -1,6 +1,7 @@
 #include "mode_icon_reader.h"
 
-char mode_icon[24];
+
+char mode_icon[12];
 
 const char *read_mode_icon(bool is_mac) {
 static const char icon[][2][3] = {{{0x95,0x96,0},{0xb5,0xb6,0}},

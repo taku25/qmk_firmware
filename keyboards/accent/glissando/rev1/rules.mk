@@ -1,16 +1,26 @@
 SPLIT_KEYBOARD = yes
 
 RGBLIGHT_ENABLE = yes
-LED_ANIMATIONS = yes
-# CUSTOM_MATRIX = yes
+
+
+
+
+
+
+
 OLED_ENABLE = yes
-OLED_DRIVER = SSD1306
+
+VIA_ENABLE = no
+LTO_ENABLE = yes
+MAGIC_ENABLE = no
 
 
-OPT_DEFS += -DOLED_FONT_H=\"common/glcdfont.c\"
 
 
 ifeq ($(strip $(OLED_ENABLE)), yes)
+	OLED_DRIVER = SSD1306
+	OPT_DEFS += -DOLED_FONT_H=\"common/glcdfont.c\"
+
     SRC += lib/mode_icon_reader.c
     SRC += lib/logo_reader.c
     SRC += lib/key_logger.c
