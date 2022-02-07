@@ -78,28 +78,6 @@ static void render_logo(void) {
     oled_write(read_logo(), false);
 }
 
-// #    ifdef SSD1306OLED
-// static void render_rgbled_status(bool full, struct CharacterMatrix *matrix) {
-// #    else
-// static void render_rgbled_status(bool full) {
-// #    endif
-// #    ifdef RGBLIGHT_ENABLE
-//     char buf[30];
-//     if (RGBLIGHT_MODES > 1 && rgblight_is_enabled()) {
-//         if (full) {
-//             snprintf(buf, sizeof(buf), " LED %2d: %d,%d,%d ",
-//                      rgblight_get_mode(),
-//                      rgblight_get_hue()/RGBLIGHT_HUE_STEP,
-//                      rgblight_get_sat()/RGBLIGHT_SAT_STEP,
-//                      rgblight_get_val()/RGBLIGHT_VAL_STEP);
-//         } else {
-//             snprintf(buf, sizeof(buf), "[%2d] ", rgblight_get_mode());
-//         }
-//         oled_write(buf, false);
-//     }
-// #    endif
-// }
-
 #    ifdef SSD1306OLED
 static void render_key_status(bool full, struct CharacterMatrix *matrix) {
 #    else
@@ -164,7 +142,6 @@ void iota_gfx_task_user(void) {
         render_logo(&matrix);
     } else {
         render_mode_status(&matrix);
-        // render_rgbled_status(false, &matrix);
         render_layer_status(&matrix);
         render_key_status(true, &matrix);
     }
@@ -185,7 +162,6 @@ bool oled_task_user(void) {
         render_mode_status();
         render_layer_status();
         render_key_status(true);
-        // render_rgbled_status(false);
     }
     return false;
 }
