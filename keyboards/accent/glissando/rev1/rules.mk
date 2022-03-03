@@ -5,7 +5,7 @@ OLED_DRIVER       = SSD1306
 VIA_ENABLE        = no
 
 RGBLIGHT_ENABLE   = no
-RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_ENABLE = no
 
 
 ifeq ($(strip $(OLED_ENABLE)), yes)

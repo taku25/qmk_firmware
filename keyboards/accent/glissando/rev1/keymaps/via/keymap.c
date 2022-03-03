@@ -27,9 +27,6 @@
 #include "lufa.h"
 #include "split_util.h"
 #endif
-#ifdef AUDIO_ENABLE
-  #include "audio.h"
-#endif
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -49,7 +46,6 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   // ADJUST,
-  RGBRST,
   L_TOS,
   L_T_CMD_CTL,
 };
@@ -132,19 +128,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_ADJUST] = LAYOUT( \
     L_TOS,  RGB_HUI,  RGB_SAI,  RGB_VAI,  _______, _______,                        KC_7,     KC_8,     KC_9,  _______,  _______, _______,\
   _______,  RGB_HUD,  RGB_SAD,  RGB_VAD,  _______, _______,                        KC_4,     KC_5,     KC_6,  _______,  _______, _______,\
-  _______,  RGB_MOD,  RGB_TOG,  RGBRST,  _______, _______,                        KC_1,     KC_2,     KC_3,  _______,  _______, _______,\
+  _______,  RGB_MOD,  RGB_TOG,  _______,  _______, _______,                        KC_1,     KC_2,     KC_3,  _______,  _______, _______,\
                                _______, _______, _______, _______,  _______,     KC_0,   KC_COMM,  KC_DOT\
 )
 };
 
-#ifdef AUDIO_ENABLE
 
-float tone_qwerty[][2]     = SONG(QWERTY_SOUND);
-float music_scale[][2]     = SONG(MUSIC_SCALE_SOUND);
-#endif
-
-// define variables for reactive RGB
-int RGB_current_mode;
 
 uint8_t TOGGLE_MAC_LGUI = KC_LGUI;
 
@@ -175,51 +164,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        #ifdef AUDIO_ENABLE
-          PLAY_SONG(tone_qwerty);
-        #endif
         persistent_default_layer_set(1UL<<_QWERTY);
       }
       return false;
       break;
     case LOWER:
       if (record->event.pressed) {
-          //not sure how to have keyboard check mode and set it to a variable, so my work around
-          //uses another variable that would be set to true after the first time a reactive key is pressed.
         layer_on(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       } else {
-        #ifdef RGBLIGHT_ENABLE
-          //rgblight_mode(RGB_current_mode);   // revert RGB to initial mode prior to RGB mode change
-        #endif
         layer_off(_LOWER);
         update_tri_layer(_LOWER, _RAISE, _ADJUST);
       }
-      return false;
-      break;
-    // case RAISE:
-    //   if (record->event.pressed) {
-    //     //not sure how to have keyboard check mode and set it to a variable, so my work around
-    //     //uses another variable that would be set to true after the first time a reactive key is pressed.
-    //     layer_on(_RAISE);
-    //     update_tri_layer(_LOWER, _RAISE, _ADJUST);
-    //   } else {
-    //     #ifdef RGBLIGHT_ENABLE
-    //       //rgblight_mode(RGB_current_mode);  // revert RGB to initial mode prior to RGB mode change
-    //     #endif
-    //     layer_off(_RAISE);
-    //     update_tri_layer(_LOWER, _RAISE, _ADJUST);
-    //   }
-    //   return false;
-    //   break;
-    case RGB_MOD:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          rgblight_mode(RGB_current_mode);
-          rgblight_step();
-          RGB_current_mode = rgblight_get_mode();
-        }
-      #endif
       return false;
       break;
     case L_TOS:
@@ -248,15 +204,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
       return true;
       break;
-    case RGBRST:
-      #ifdef RGBLIGHT_ENABLE
-        if (record->event.pressed) {
-          eeconfig_update_rgblight_default();
-          rgblight_enable();
-          RGB_current_mode = rgblight_get_mode();
-        }
-      #endif
-      break;
   }
   return true;
 }
@@ -273,40 +220,9 @@ bool should_process_keypress(void)
 #endif
 
 void matrix_init_user(void) {
-    #ifdef AUDIO_ENABLE
-        startup_user();
-    #endif
-    #ifdef RGBLIGHT_ENABLE
-      RGB_current_mode = rgblight_get_mode();
-    #endif
-    // //SSD1306 OLED init, make sure to add #define SSD1306OLED in config.h
     #ifdef SSD1306OLED
         iota_gfx_init();   // turns on the display
     #endif
 }
 
 
-#ifdef AUDIO_ENABLE
-
-void startup_user()
-{
-    _delay_ms(20); // gets rid of tick
-}
-
-void shutdown_user()
-{
-    _delay_ms(150);
-    stop_all_notes();
-}
-
-void music_on_user(void)
-{
-    music_scale_user();
-}
-
-void music_scale_user(void)
-{
-    PLAY_SONG(music_scale);
-}
-
-#endif
