@@ -6,6 +6,7 @@
 #   See TOP/docs/config_options.md for more information.
 #
 
+RGBLIGHT_ENABLE   = yes
 
 
 VIA_ENABLE = yes
