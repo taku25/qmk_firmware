@@ -1,12 +1,5 @@
 #include "rev1.h"
 
-bool is_mac_mode_flag = false;
-
-
-#ifdef SSD1306OLED
-#include "ssd1306.h"
-
-#endif
 
     #if defined(RGB_MATRIX_ENABLE)
 
@@ -55,10 +48,5 @@ bool is_mac_mode_flag = false;
 
 #endif
 
-bool is_mac_mode(void) {
-    return is_mac_mode_flag;
-}
 
-void set_mac_mode_kb(bool macmode) {
-    is_mac_mode_flag = macmode;
-}
+

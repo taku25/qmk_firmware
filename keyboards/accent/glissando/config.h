@@ -18,14 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
-
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x6B62
-#define PRODUCT_ID      0x0002
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    taku25
-#define PRODUCT         Accent-Glissando
-
+#ifdef OLED_ENABLE
+    #define OLED_UPDATE_INTERVAL 50
+    #define SPLIT_TRANSPORT_MIRROR
+#endif

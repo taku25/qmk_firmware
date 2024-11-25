@@ -1,11 +1,11 @@
-#include "key_logger.h"
-
+#include <stdio.h>
+#include <stdint.h>
+#include "action.h"
 
 char keylog_str[24] = {};
 char keylogs_str[21] = {};
 int keylogs_str_idx = 0;
 
-//keycode.h KC_A....
 const char code_to_name[60] = {
     ' ', ' ', ' ', ' ', 'a', 'b', 'c', 'd', 'e', 'f',
     'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
@@ -13,6 +13,7 @@ const char code_to_name[60] = {
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     'R', 'E', 'B', 'T', ' ', '-', '=', '[', ']', '/',
     ' ', ';', '\'', ' ', ',', '.', '/', ' ', ' ', ' '};
+
 
 void set_keylog(uint16_t keycode, keyrecord_t *record) {
   char name = ' ';
